@@ -20,7 +20,15 @@ export GNUPLOT_PROG="@GNUPLOT@"        # gnuplot (data plotting program)
 export HHC_PROG="@HTML_HELP_COMPILER@" # HTML Help Compiler
 export MV_PROG="@MV@"                  # mv (Unix-like 'move/rename files')
 export PERL_PROG="@PERL@"              # Perl
-export RM_PROG="@RM@"                  # rm (Unix-like 'remove files')
+
+# Skip cleaning steps. This will allow faster regeneration when locally
+# developing the documentation.
+if [[ "$1" == "--skip-clean" ]]; then
+    echo "Invoked with '--skip-clean'"
+    export RM_PROG="NOTFOUND"
+else
+    export RM_PROG="@RM@"                  # rm (Unix-like 'remove files')
+fi
 export TAR_PROG="@TAR@"                # tar (Unix-like 'archiver')
 export WGET_PROG="@WGET@"              # wget (remote file retrieval)
 
