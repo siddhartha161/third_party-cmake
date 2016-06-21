@@ -66,7 +66,48 @@ class cmCTest
   friend class cmCTestMultiProcessHandler;
 
 public:
-  /** Enumerate parts of the testing and submission process.  */
+  /**
+   * \enum Part
+   * Enumerate parts of the testing and submission process.
+   *
+   * For more details,
+   * see \cm_manual{manual/ctest.1.html#dashboard-client-steps,
+   * dashboard client steps}.
+   *
+   * \sa PartInfo
+   *
+   * \var Part PartStart
+   * See \cm_manual{manual/ctest.1.html#ctest-start-step, start step}.
+   *
+   * \var Part PartUpdate
+   * The \cm_manual{manual/ctest.1.html#ctest-update-step, update step}
+   * is handled by cmCTestUpdateHandler.
+   *
+   * \var Part PartConfigure
+   * The \cm_manual{manual/ctest.1.html#ctest-configure-step, configure step}
+   * is handled by cmCTestConfigureHandler.
+   *
+   * \var Part PartBuild
+   * The \cm_manual{manual/ctest.1.html#ctest-build-step, build step}
+   * is handled by cmCTestBuildHandler.
+   *
+   * \var Part PartTest
+   * The \cm_manual{manual/ctest.1.html#ctest-test-step, test step}
+   * is handled by cmCTestTestHandler.
+   *
+   * \var Part PartCoverage
+   * The \cm_manual{manual/ctest.1.html#ctest-coverage-step, coverage step}
+   * is handled by cmCTestCoverageHandler.
+   *
+   * \var Part PartMemCheck
+   * The \cm_manual{manual/ctest.1.html#ctest-memcheck-step, memcheck step}
+   * is handled by cmCTestMemCheckHandler.
+   *
+   * \var Part PartSubmit
+   * The \cm_manual{manual/ctest.1.html#ctest-submit-step, submit step}
+   * is handled by cmCTestSubmitHandler.
+   *
+   */
   enum Part
   {
     PartStart,
@@ -323,6 +364,10 @@ public:
    */
   std::string GetShortPathToFile(const char* fname);
 
+  /**
+   * Enumerate all \cm_manual{manual/ctest.1.html#dashboard-client-modes,
+   * dashboard client modes}.
+   */
   enum
   {
     EXPERIMENTAL,
