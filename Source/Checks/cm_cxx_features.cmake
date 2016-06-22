@@ -29,4 +29,5 @@ endfunction()
 
 if(CMAKE_CXX_STANDARD)
   cm_check_cxx_feature(unordered_map)
+  cm_check_cxx_feature(unordered_set)
 endif()
