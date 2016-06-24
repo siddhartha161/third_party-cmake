@@ -9,6 +9,10 @@ function(cm_check_cxx_feature name)
       CMAKE_FLAGS -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
       OUTPUT_VARIABLE OUTPUT
       )
+    # If using the feature causes warnings, treat it as broken/unavailable.
+    if(OUTPUT MATCHES "warning")
+      set(CMake_HAVE_CXX_${FEATURE} OFF CACHE INTERNAL "TRY_COMPILE" FORCE)
+    endif()
     if(CMake_HAVE_CXX_${FEATURE})
       message(STATUS "Checking if compiler supports C++ ${name} - yes")
       file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
