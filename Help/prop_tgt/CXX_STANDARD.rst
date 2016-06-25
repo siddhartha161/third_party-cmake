@@ -21,7 +21,9 @@ means that using:
 with a compiler which does not support ``-std=gnu++11`` or an equivalent
 flag will not result in an error or warning, but will instead add the
 ``-std=gnu++98`` flag if supported.  This "decay" behavior may be controlled
-with the :prop_tgt:`CXX_STANDARD_REQUIRED` target property.
+with the :prop_tgt:`CXX_STANDARD_REQUIRED` target property. Eventually available
+compiler extensions for the requested standard could be controlled with the
+:prop_tgt:`CXX_EXTENSIONS` target property.
 
 See the :manual:`cmake-compile-features(7)` manual for information on
 compile features and a list of supported compilers.

@@ -22,6 +22,8 @@ with a compiler which does not support ``-std=gnu11`` or an equivalent
 flag will not result in an error or warning, but will instead add the
 ``-std=gnu99`` or ``-std=gnu90`` flag if supported.  This "decay" behavior may
 be controlled with the :prop_tgt:`C_STANDARD_REQUIRED` target property.
+Eventually available compiler extensions for the requested standard could be
+controlled with the :prop_tgt:`C_EXTENSIONS` target property.
 
 See the :manual:`cmake-compile-features(7)` manual for information on
 compile features and a list of supported compilers.
