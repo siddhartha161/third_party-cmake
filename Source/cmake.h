@@ -250,7 +250,8 @@ public:
    *  number provided may be negative in cases where a message is
    *  to be displayed without any progress percentage.
    */
-  void SetProgressCallback(ProgressCallbackType f, void* clientData = 0);
+  void SetProgressCallback(ProgressCallbackType f,
+                           void* clientData = CM_NULLPTR);
 
   ///! this is called by generators to update the progress
   void UpdateProgress(const char* msg, float prog);
@@ -573,7 +574,7 @@ private:
   F(cxx_long_long_type)                                                       \
   F(cxx_noexcept)                                                             \
   F(cxx_nonstatic_member_init)                                                \
-  F(cxx_nullptr)                                                              \
+  F(cxx_nullptr)                                                           \
   F(cxx_override)                                                             \
   F(cxx_range_for)                                                            \
   F(cxx_raw_string_literals)                                                  \
