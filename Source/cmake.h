@@ -574,7 +574,7 @@ private:
   F(cxx_long_long_type)                                                       \
   F(cxx_noexcept)                                                             \
   F(cxx_nonstatic_member_init)                                                \
-  F(cxx_nullptr)                                                           \
+  F(cxx_nullptr)                                                              \
   F(cxx_override)                                                             \
   F(cxx_range_for)                                                            \
   F(cxx_raw_string_literals)                                                  \
