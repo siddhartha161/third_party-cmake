@@ -26,14 +26,14 @@ cmGeneratorExpression::cmGeneratorExpression(
 {
 }
 
-CM_AUTO_PTR<cmCompiledGeneratorExpression> cmGeneratorExpression::Parse(
+cmsys::auto_ptr<cmCompiledGeneratorExpression> cmGeneratorExpression::Parse(
   std::string const& input)
 {
-  return CM_AUTO_PTR<cmCompiledGeneratorExpression>(
+  return cmsys::auto_ptr<cmCompiledGeneratorExpression>(
     new cmCompiledGeneratorExpression(this->Backtrace, input));
 }
 
-CM_AUTO_PTR<cmCompiledGeneratorExpression> cmGeneratorExpression::Parse(
+cmsys::auto_ptr<cmCompiledGeneratorExpression> cmGeneratorExpression::Parse(
   const char* input)
 {
   return this->Parse(std::string(input ? input : ""));

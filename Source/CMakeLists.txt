@@ -364,7 +364,6 @@ set(SRCS
   cmake.cxx
   cmake.h
 
-  cm_auto_ptr.hxx
   cm_get_date.h
   cm_get_date.c
   cm_sha2.h

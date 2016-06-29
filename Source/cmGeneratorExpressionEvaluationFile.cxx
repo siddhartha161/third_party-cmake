@@ -23,8 +23,9 @@
 
 cmGeneratorExpressionEvaluationFile::cmGeneratorExpressionEvaluationFile(
   const std::string& input,
-  CM_AUTO_PTR<cmCompiledGeneratorExpression> outputFileExpr,
-  CM_AUTO_PTR<cmCompiledGeneratorExpression> condition, bool inputIsContent)
+  cmsys::auto_ptr<cmCompiledGeneratorExpression> outputFileExpr,
+  cmsys::auto_ptr<cmCompiledGeneratorExpression> condition,
+  bool inputIsContent)
   : Input(input)
   , OutputFileExpr(outputFileExpr)
   , Condition(condition)
@@ -134,7 +135,7 @@ void cmGeneratorExpressionEvaluationFile::Generate(cmLocalGenerator* lg)
 
   cmListFileBacktrace lfbt = this->OutputFileExpr->GetBacktrace();
   cmGeneratorExpression contentGE(lfbt);
-  CM_AUTO_PTR<cmCompiledGeneratorExpression> inputExpression =
+  cmsys::auto_ptr<cmCompiledGeneratorExpression> inputExpression =
     contentGE.Parse(inputContent);
 
   std::map<std::string, std::string> outputFiles;

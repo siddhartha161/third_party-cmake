@@ -51,7 +51,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include <cm_auto_ptr.hxx>
+#include <cmsys/auto_ptr.hxx>
 
 #include <cm_zlib.h>
 #include <cmsys/Base64.h>
@@ -474,7 +474,7 @@ int cmCTest::Initialize(const char* binary_dir, cmCTestStartCommand* command)
   cm.SetHomeOutputDirectory("");
   cm.GetCurrentSnapshot().SetDefaultDefinitions();
   cmGlobalGenerator gg(&cm);
-  CM_AUTO_PTR<cmMakefile> mf(new cmMakefile(&gg, cm.GetCurrentSnapshot()));
+  cmsys::auto_ptr<cmMakefile> mf(new cmMakefile(&gg, cm.GetCurrentSnapshot()));
   if (!this->ReadCustomConfigurationFileTree(this->BinaryDir.c_str(),
                                              mf.get())) {
     cmCTestOptionalLog(
@@ -1165,7 +1165,7 @@ int cmCTest::RunTest(std::vector<const char*> argv, std::string* output,
     }
     std::string oldpath = cmSystemTools::GetCurrentWorkingDirectory();
 
-    CM_AUTO_PTR<cmSystemTools::SaveRestoreEnvironment> saveEnv;
+    cmsys::auto_ptr<cmSystemTools::SaveRestoreEnvironment> saveEnv;
     if (modifyEnv) {
       saveEnv.reset(new cmSystemTools::SaveRestoreEnvironment);
       cmSystemTools::AppendEnv(*environment);
@@ -1193,7 +1193,7 @@ int cmCTest::RunTest(std::vector<const char*> argv, std::string* output,
     *output = "";
   }
 
-  CM_AUTO_PTR<cmSystemTools::SaveRestoreEnvironment> saveEnv;
+  cmsys::auto_ptr<cmSystemTools::SaveRestoreEnvironment> saveEnv;
   if (modifyEnv) {
     saveEnv.reset(new cmSystemTools::SaveRestoreEnvironment);
     cmSystemTools::AppendEnv(*environment);

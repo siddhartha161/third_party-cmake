@@ -22,7 +22,7 @@
 class cmInstalledFile
 {
 public:
-  typedef CM_AUTO_PTR<cmCompiledGeneratorExpression>
+  typedef cmsys::auto_ptr<cmCompiledGeneratorExpression>
     CompiledGeneratorExpressionPtrType;
 
   typedef std::vector<cmCompiledGeneratorExpression*> ExpressionVectorType;

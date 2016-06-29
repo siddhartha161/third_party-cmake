@@ -1044,7 +1044,7 @@ std::string cmCPackWIXGenerator::CreateNewIdForPath(std::string const& path)
 std::string cmCPackWIXGenerator::CreateHashedId(
   std::string const& path, std::string const& normalizedFilename)
 {
-  CM_AUTO_PTR<cmCryptoHash> sha1 = cmCryptoHash::New("SHA1");
+  cmsys::auto_ptr<cmCryptoHash> sha1 = cmCryptoHash::New("SHA1");
   std::string hash = sha1->HashString(path.c_str());
 
   std::string identifier;
