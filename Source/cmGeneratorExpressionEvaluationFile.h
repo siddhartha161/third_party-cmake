@@ -14,7 +14,7 @@
 
 #include "cmGeneratorExpression.h"
 
-#include <cm_auto_ptr.hxx>
+#include <cmsys/auto_ptr.hxx>
 #include <sys/types.h>
 
 class cmLocalGenerator;
@@ -24,8 +24,9 @@ class cmGeneratorExpressionEvaluationFile
 public:
   cmGeneratorExpressionEvaluationFile(
     const std::string& input,
-    CM_AUTO_PTR<cmCompiledGeneratorExpression> outputFileExpr,
-    CM_AUTO_PTR<cmCompiledGeneratorExpression> condition, bool inputIsContent);
+    cmsys::auto_ptr<cmCompiledGeneratorExpression> outputFileExpr,
+    cmsys::auto_ptr<cmCompiledGeneratorExpression> condition,
+    bool inputIsContent);
 
   void Generate(cmLocalGenerator* lg);
 
@@ -41,8 +42,8 @@ private:
 
 private:
   const std::string Input;
-  const CM_AUTO_PTR<cmCompiledGeneratorExpression> OutputFileExpr;
-  const CM_AUTO_PTR<cmCompiledGeneratorExpression> Condition;
+  const cmsys::auto_ptr<cmCompiledGeneratorExpression> OutputFileExpr;
+  const cmsys::auto_ptr<cmCompiledGeneratorExpression> Condition;
   std::vector<std::string> Files;
   const bool InputIsContent;
 };

@@ -35,10 +35,10 @@
 #include "cmake.h"
 #include <stdlib.h> // required for atoi
 
-#include <cm_auto_ptr.hxx>
 #include <cmsys/FStream.hxx>
 #include <cmsys/RegularExpression.hxx>
 #include <cmsys/SystemTools.hxx>
+#include <cmsys/auto_ptr.hxx>
 
 #include <assert.h>
 #include <ctype.h> // for isspace
@@ -262,7 +262,7 @@ bool cmMakefile::ExecuteCommand(const cmListFileFunction& lff,
   // Lookup the command prototype.
   if (cmCommand* proto = this->GetState()->GetCommand(name)) {
     // Clone the prototype.
-    CM_AUTO_PTR<cmCommand> pcmd(proto->Clone());
+    cmsys::auto_ptr<cmCommand> pcmd(proto->Clone());
     pcmd->SetMakefile(this);
 
     // Decide whether to invoke the command.
@@ -589,8 +589,9 @@ void cmMakefile::EnforceDirectoryLevelRules() const
 
 void cmMakefile::AddEvaluationFile(
   const std::string& inputFile,
-  CM_AUTO_PTR<cmCompiledGeneratorExpression> outputName,
-  CM_AUTO_PTR<cmCompiledGeneratorExpression> condition, bool inputIsContent)
+  cmsys::auto_ptr<cmCompiledGeneratorExpression> outputName,
+  cmsys::auto_ptr<cmCompiledGeneratorExpression> condition,
+  bool inputIsContent)
 {
   this->EvaluationFiles.push_back(new cmGeneratorExpressionEvaluationFile(
     inputFile, outputName, condition, inputIsContent));
@@ -2889,7 +2890,7 @@ void cmMakefile::PopFunctionBlockerBarrier(bool reportError)
   FunctionBlockersType::size_type barrier =
     this->FunctionBlockerBarriers.back();
   while (this->FunctionBlockers.size() > barrier) {
-    CM_AUTO_PTR<cmFunctionBlocker> fb(this->FunctionBlockers.back());
+    cmsys::auto_ptr<cmFunctionBlocker> fb(this->FunctionBlockers.back());
     this->FunctionBlockers.pop_back();
     if (reportError) {
       // Report the context in which the unclosed block was opened.
@@ -3026,7 +3027,7 @@ void cmMakefile::AddFunctionBlocker(cmFunctionBlocker* fb)
   this->FunctionBlockers.push_back(fb);
 }
 
-CM_AUTO_PTR<cmFunctionBlocker> cmMakefile::RemoveFunctionBlocker(
+cmsys::auto_ptr<cmFunctionBlocker> cmMakefile::RemoveFunctionBlocker(
   cmFunctionBlocker* fb, const cmListFileFunction& lff)
 {
   // Find the function blocker stack barrier for the current scope.
@@ -3059,11 +3060,11 @@ CM_AUTO_PTR<cmFunctionBlocker> cmMakefile::RemoveFunctionBlocker(
       }
       cmFunctionBlocker* b = *pos;
       this->FunctionBlockers.erase(pos);
-      return CM_AUTO_PTR<cmFunctionBlocker>(b);
+      return cmsys::auto_ptr<cmFunctionBlocker>(b);
     }
   }
 
-  return CM_AUTO_PTR<cmFunctionBlocker>();
+  return cmsys::auto_ptr<cmFunctionBlocker>();
 }
 
 const char* cmMakefile::GetHomeDirectory() const
@@ -3691,7 +3692,7 @@ cmTarget* cmMakefile::AddImportedTarget(const std::string& name,
                                         cmState::TargetType type, bool global)
 {
   // Create the target.
-  CM_AUTO_PTR<cmTarget> target(new cmTarget);
+  cmsys::auto_ptr<cmTarget> target(new cmTarget);
   target->SetType(type, name);
   target->MarkAsImported(global);
   target->SetMakefile(this);

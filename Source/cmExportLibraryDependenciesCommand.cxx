@@ -16,7 +16,7 @@
 #include "cmVersion.h"
 #include "cmake.h"
 
-#include <cm_auto_ptr.hxx>
+#include <cmsys/auto_ptr.hxx>
 
 bool cmExportLibraryDependenciesCommand::InitialPass(
   std::vector<std::string> const& args, cmExecutionStatus&)
@@ -53,13 +53,13 @@ void cmExportLibraryDependenciesCommand::FinalPass()
 void cmExportLibraryDependenciesCommand::ConstFinalPass() const
 {
   // Use copy-if-different if not appending.
-  CM_AUTO_PTR<cmsys::ofstream> foutPtr;
+  cmsys::auto_ptr<cmsys::ofstream> foutPtr;
   if (this->Append) {
-    CM_AUTO_PTR<cmsys::ofstream> ap(
+    cmsys::auto_ptr<cmsys::ofstream> ap(
       new cmsys::ofstream(this->Filename.c_str(), std::ios::app));
     foutPtr = ap;
   } else {
-    CM_AUTO_PTR<cmGeneratedFileStream> ap(
+    cmsys::auto_ptr<cmGeneratedFileStream> ap(
       new cmGeneratedFileStream(this->Filename.c_str(), true));
     ap->SetCopyIfDifferent(true);
     foutPtr = ap;
