@@ -17,14 +17,14 @@
 // FIXME: Use std::auto_ptr on compilers that do not warn about it.
 #define CM_AUTO_PTR cm::auto_ptr
 
-// The HP compiler and VS6 cannot handle the conversions necessary to use
+// The HP compiler cannot handle the conversions necessary to use
 // auto_ptr_ref to pass an auto_ptr returned from one function
 // directly to another function as in use_auto_ptr(get_auto_ptr()).
 // We instead use const_cast to achieve the syntax on those platforms.
 // We do not use const_cast on other platforms to maintain the C++
 // standard design and guarantee that if an auto_ptr is bound
 // to a reference-to-const then ownership will be maintained.
-#if defined(__HP_aCC) || (defined(_MSC_VER) && _MSC_VER <= 1200)
+#if defined(__HP_aCC)
 #define cm_AUTO_PTR_REF 0
 #define cm_AUTO_PTR_CONST const
 #define cm_AUTO_PTR_CAST(a) cast(a)
