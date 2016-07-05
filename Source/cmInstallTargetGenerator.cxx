@@ -142,22 +142,13 @@ void cmInstallTargetGenerator::GenerateScriptForConfig(
       if (this->Target->IsAppBundleOnApple()) {
         cmMakefile const* mf = this->Target->Target->GetMakefile();
 
-        // Get App Bundle Extension
-        const char* ext = this->Target->GetProperty("BUNDLE_EXTENSION");
-        if (!ext) {
-          ext = "app";
-        }
-
         // Install the whole app bundle directory.
         type = cmInstallType_DIRECTORY;
         literal_args += " USE_SOURCE_PERMISSIONS";
-        from1 += ".";
-        from1 += ext;
+        from1 += ".app";
 
         // Tweaks apply to the binary inside the bundle.
-        to1 += ".";
-        to1 += ext;
-        to1 += "/";
+        to1 += ".app/";
         if (!mf->PlatformIsAppleIos()) {
           to1 += "Contents/MacOS/";
         }
