@@ -35,9 +35,6 @@ GRAPHICAL_HIERARCHY  = YES
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
 
-ALIASES += cm_manual{1}="<a href=\"https://cmake.org/cmake/help/v@CMake_VERSION_MAJOR@.@CMake_VERSION_MINOR@/\1\">https://cmake.org/cmake/help/v@CMake_VERSION_MAJOR@.@CMake_VERSION_MINOR@/\1</a>"
-ALIASES += cm_manual{2}="<a href=\"https://cmake.org/cmake/help/v@CMake_VERSION_MAJOR@.@CMake_VERSION_MINOR@/\1\">\2</a>"
-
 ALLEXTERNALS         = NO
 
 IMAGE_PATH           = "@CMake_BINARY_DIR@/Utilities/Doxygen/contrib"
