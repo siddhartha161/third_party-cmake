@@ -519,8 +519,7 @@ void cmMakefileLibraryTargetGenerator::WriteLibraryRules(
                             useWatcomQuote);
 
     // maybe create .def file from list of objects
-    if ((this->GeneratorTarget->GetType() == cmState::SHARED_LIBRARY ||
-         this->GeneratorTarget->IsExecutableWithExports()) &&
+    if (this->GeneratorTarget->GetType() == cmState::SHARED_LIBRARY &&
         this->Makefile->IsOn("CMAKE_SUPPORT_WINDOWS_EXPORT_ALL_SYMBOLS")) {
       if (this->GeneratorTarget->GetPropertyAsBool(
             "WINDOWS_EXPORT_ALL_SYMBOLS")) {
