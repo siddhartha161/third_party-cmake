@@ -1013,8 +1013,7 @@ void cmLocalVisualStudio7Generator::OutputBuildTool(
     linkOptions.AddFlag("ModuleDefinitionFile", defFile.c_str());
   }
 
-  if ((target->GetType() == cmState::SHARED_LIBRARY ||
-       target->IsExecutableWithExports()) &&
+  if (target->GetType() == cmState::SHARED_LIBRARY &&
       this->Makefile->IsOn("CMAKE_SUPPORT_WINDOWS_EXPORT_ALL_SYMBOLS")) {
     if (target->GetPropertyAsBool("WINDOWS_EXPORT_ALL_SYMBOLS")) {
       linkOptions.AddFlag("ModuleDefinitionFile", "$(IntDir)/exportall.def");
@@ -1837,8 +1836,7 @@ void cmLocalVisualStudio7Generator::OutputTargetRules(
   tool = this->FortranProject ? "VFPreLinkEventTool" : "VCPreLinkEventTool";
   event.Start(tool);
   bool addedPrelink = false;
-  if ((target->GetType() == cmState::SHARED_LIBRARY ||
-       target->IsExecutableWithExports()) &&
+  if (target->GetType() == cmState::SHARED_LIBRARY &&
       this->Makefile->IsOn("CMAKE_SUPPORT_WINDOWS_EXPORT_ALL_SYMBOLS")) {
     if (target->GetPropertyAsBool("WINDOWS_EXPORT_ALL_SYMBOLS")) {
       addedPrelink = true;
