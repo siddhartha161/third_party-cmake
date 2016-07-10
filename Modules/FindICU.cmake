@@ -122,24 +122,6 @@ function(_ICU_FIND)
     endif()
   endif()
 
-  set(icu_programs
-    gencnval
-    icuinfo
-    genbrk
-    icu-config
-    genrb
-    gendict
-    derb
-    pkgdata
-    uconv
-    gencfu
-    makeconv
-    gennorm2
-    genccode
-    gensprep
-    icupkg
-    gencmn)
-
   # Find all ICU programs
   foreach(program ${icu_programs})
     string(TOUPPER "${program}" program_upcase)
