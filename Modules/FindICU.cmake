@@ -250,7 +250,7 @@ if(ICU_FOUND)
       set("${_ICU_component_lib}" "${${_ICU_component_cache}}")
       if(NOT TARGET ${_ICU_imported_target})
         add_library(${_ICU_imported_target} UNKNOWN IMPORTED)
-        if()
+        if(ICU_INCLUDE_DIR)
           set_target_properties(${_ICU_imported_target} PROPERTIES
             INTERFACE_INCLUDE_DIRECTORIES "${ICU_INCLUDE_DIR}")
         endif()
