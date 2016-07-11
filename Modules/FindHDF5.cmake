@@ -267,8 +267,20 @@ endfunction()
 # return_value argument, the text output is stored to the output variable.
 macro( _HDF5_invoke_compiler language output return_value version)
     set(${version})
+    if(HDF5_USE_STATIC_LIBRARIES)
+       set(_ltargs -noshlib)
+     else()
+       set(_ltargs -shlib)
+    endif()
+    if(language STREQUAL "C")
+        set(_sourcefile test_hdf5.c)
+    elseif(language STREQUAL "CXX")
+        set(_sourcefile test_hdf5.cxx)
+    elseif(language STREQUAL "Fortran")
+        set(_sourcefile test_hdf5.f90)
+    endif()
     exec_program( ${HDF5_${language}_COMPILER_EXECUTABLE}
-        ARGS -show
+        ARGS -show ${_ltargs} ${_sourcefile}
         OUTPUT_VARIABLE ${output}
         RETURN_VALUE ${return_value}
     )
@@ -321,7 +333,6 @@ macro( _HDF5_parse_compile_line
     string( REGEX MATCHALL "-L([^\" ]+|\"[^\"]+\")" library_path_flags
         "${${compile_line_var}}"
     )
-
     foreach( LPATH ${library_path_flags} )
         string( REGEX REPLACE "^-L" "" LPATH ${LPATH} )
         string( REPLACE "//" "/" LPATH ${LPATH} )
@@ -331,15 +342,30 @@ macro( _HDF5_parse_compile_line
     # now search for the library names specified in the compile line (match -l...)
     # match only -l's preceded by a space or comma
     # this is to exclude directory names like xxx-linux/
-    string( REGEX MATCHALL "[, ]-l([^\", ]+)" library_name_flags
+    string( REGEX MATCHALL "[, ]+-l([^\", ]+)" library_name_flags
         "${${compile_line_var}}" )
-    # strip the -l from all of the library flags and add to the search list
     foreach( LIB ${library_name_flags} )
-        string( REGEX REPLACE "^[, ]-l" "" LIB ${LIB} )
-        if(LIB MATCHES ".*_hl")
+        string( REGEX REPLACE "^[, ]+-l" "" LIB ${LIB} )
+        if(LIB MATCHES ".*hl")
             list(APPEND ${libraries_hl} ${LIB})
         else()
             list(APPEND ${libraries} ${LIB})
+        endif()
+    endforeach()
+
+    # now search for full library paths with no flags
+    string( REGEX MATCHALL "[, ][^\-]([^\", ]+)" library_name_noflags
+        "${${compile_line_var}}" )
+    foreach( LIB ${library_name_noflags})
+        string( REGEX REPLACE "^[, ]+" "" LIB ${LIB} )
+        get_filename_component(LIB_DIR ${LIB} DIRECTORY)
+        get_filename_component(LIB_NAME ${LIB} NAME_WE)
+        string( REGEX REPLACE "^lib" "" LIB_NAME ${LIB_NAME} )
+        list( APPEND ${library_paths} ${LIB_DIR} )
+        if(LIB_NAME MATCHES ".*hl")
+            list(APPEND ${libraries_hl} ${LIB_NAME})
+        else()
+            list(APPEND ${libraries} ${LIB_NAME})
         endif()
     endforeach()
 endmacro()
@@ -459,6 +485,14 @@ if(NOT HDF5_FOUND AND NOT HDF5_ROOT)
             HDF5_${__lang}_HL_LIBRARY_NAMES
           )
           set(HDF5_${__lang}_LIBRARIES)
+
+          set(_HDF5_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
+          if(HDF5_USE_STATIC_LIBRARIES)
+            set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+          else()
+            set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX})
+          endif()
+
           foreach(L IN LISTS HDF5_${__lang}_LIBRARY_NAMES)
             find_library(HDF5_${__lang}_LIBRARY_${L} ${L} ${HDF5_${__lang}_LIBRARY_DIRS})
             if(HDF5_${__lang}_LIBRARY_${L})
@@ -478,6 +512,9 @@ if(NOT HDF5_FOUND AND NOT HDF5_ROOT)
               endif()
             endforeach()
           endif()
+
+          set(CMAKE_FIND_LIBRARY_SUFFIXES ${_HDF5_CMAKE_FIND_LIBRARY_SUFFIXES})
+
           set(HDF5_${__lang}_FOUND True)
           mark_as_advanced(HDF5_${__lang}_DEFINITIONS)
           mark_as_advanced(HDF5_${__lang}_INCLUDE_DIRS)
