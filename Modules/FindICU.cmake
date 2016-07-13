@@ -10,7 +10,7 @@
 # ``lx``, ``test``, ``tu`` and ``uc``.
 #
 # Note that on Windows ``data`` is named ``dt`` and ``i18n`` is named
-# ``in`; any of the names may be used, and the appropriate
+# ``in``; any of the names may be used, and the appropriate
 # platform-specific library name will be automatically selected.
 #
 # This module reports information about the ICU installation in
